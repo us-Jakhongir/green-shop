@@ -48,14 +48,6 @@ public class IncomingServiceImpl implements IncomingService {
         return incomingRepository.save(incomingToBeEdited);
     }
 
-    private Incoming findById(Long incomingId) {
-        Incoming incomingFound = null;
-        Optional<Incoming> optionalIncoming = incomingRepository.findById(incomingId);
-        if(optionalIncoming.isPresent()){
-            incomingFound = optionalIncoming.get();
-        }
-        return incomingFound;
-    }
 
     @Override
     public String deleteIncoming(Long incomingId) {
@@ -65,5 +57,15 @@ public class IncomingServiceImpl implements IncomingService {
         }
         incomingRepository.delete(incomingToBeDeleted);
         return "Data was successfully deleted with id {" + incomingId + "}.";
+    }
+
+    @Override
+    public Incoming findById(Long id) {
+            Incoming incomingFound = null;
+            Optional<Incoming> optionalIncoming = incomingRepository.findById(id);
+            if(optionalIncoming.isPresent()){
+                incomingFound = optionalIncoming.get();
+            }
+            return incomingFound;
     }
 }
