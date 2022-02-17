@@ -14,7 +14,7 @@ import uz.webbrain.appgreenshop.service.CategoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -26,22 +26,22 @@ public class CategoryController {
      * CRUD - get categories
      * @return
      */
-    @GetMapping("/categories")
+    @GetMapping("/")
     public List<Category> getCategories(){
         return categoryService.findAll();
     }
 
-    @PostMapping("/categories/add")
+    @PostMapping("/add")
     public Category addCategory(@RequestBody CategoryDTO categoryDTO){
         return categoryService.addCategory(categoryDTO);
     }
 
-    @PutMapping("/categories/{category_id}")
+    @PutMapping("/{category_id}")
     public Category editCategory(@PathVariable Long category_id, @RequestBody CategoryDTO categoryDTO){
         return categoryService.editCategory(category_id, categoryDTO);
     }
 
-    @DeleteMapping("/categories/{category_id}")
+    @DeleteMapping("/{category_id}")
     public String deleteCategory(@PathVariable Long category_id){
         return categoryService.deleteCategory(category_id);
     }
