@@ -14,4 +14,6 @@ public interface IncomingService {
     Incoming editIncoming(Long incomingId, IncomingDto incomingDto);
 
     String deleteIncoming(Long incomingId);
+
+    Incoming findById(Long id);
 }
