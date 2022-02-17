@@ -22,7 +22,6 @@ public class PlantServiceImpl implements PlantService {
 
     @Override
     public Plant save(PlantCreateDto dto) {
-
         Plant parentPlant = findById(dto.getPlantId());
         Plant plant = new Plant();
         plant.setName(dto.getName());
@@ -40,8 +39,8 @@ public class PlantServiceImpl implements PlantService {
 
     @Override
     public Plant findById(Long id) {
-        Optional<Plant> optionalPlant = plantRepository.findById(id);
         Plant plant = null;
+        Optional<Plant> optionalPlant = plantRepository.findById(id);
         if (optionalPlant.isPresent())
             plant = optionalPlant.get();
         return plant;
@@ -55,12 +54,10 @@ public class PlantServiceImpl implements PlantService {
         Plant parentPlant = findById(dto.getPlantId());
         plant.setName(dto.getName());
         plant.setDescription(dto.getDescription());
-
         Category category = categoryService.findById(dto.getCategoryId());
         plant.setCategory(category);
         plant.setRelated(parentPlant);
-        plantRepository.save(plant);
-        return plant;
+        return plantRepository.save(plant);
     }
 
     @Override

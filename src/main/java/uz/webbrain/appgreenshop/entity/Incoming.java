@@ -8,6 +8,7 @@ package uz.webbrain.appgreenshop.entity;
 
 import lombok.*;
 import uz.webbrain.appgreenshop.entity.template.AbcEntity;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
