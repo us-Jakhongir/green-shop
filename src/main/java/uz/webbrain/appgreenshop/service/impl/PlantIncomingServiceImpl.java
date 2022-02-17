@@ -8,6 +8,7 @@ package uz.webbrain.appgreenshop.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import uz.webbrain.appgreenshop.dto.request.PlantIncomingDto;
 import uz.webbrain.appgreenshop.dto.response.Response;
 import uz.webbrain.appgreenshop.entity.Incoming;
@@ -20,6 +21,7 @@ import uz.webbrain.appgreenshop.service.PlantIncomingService;
 import uz.webbrain.appgreenshop.service.PlantService;
 
 import java.util.List;
+@Service
 @RequiredArgsConstructor
 public class PlantIncomingServiceImpl implements PlantIncomingService {
     private final PlantIncomingRepository plantIncomingRepository;
