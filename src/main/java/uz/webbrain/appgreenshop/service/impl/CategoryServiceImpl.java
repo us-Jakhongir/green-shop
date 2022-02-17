@@ -29,17 +29,12 @@ public class CategoryServiceImpl implements CategoryService {
     public Category addCategory(CategoryDTO categoryDTO) {
         Category newcategory = new Category();
         newcategory.setName(categoryDTO.getName());
-
         if(categoryDTO.getParentId() != null){
-            Category parent = null;
-            Optional<Category> parentOption = categoryRespository.findById(categoryDTO.getParentId());
-            if(parentOption.isPresent()){
-                parent = parentOption.get();
+            Category parent = findById(categoryDTO.getParentId());
+            if(parent != null){
                 newcategory.setParent(parent);
             }
         }
-
-        newcategory.setStatus(categoryDTO.getStatus());
         return categoryRespository.save(newcategory);
     }
 
@@ -50,21 +45,33 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category editCategory(Long category_id, CategoryDTO categoryDTO) {
-        Optional<Category> categoryOptional = categoryRespository.findById(category_id);
-        Category categoryToBeUpdated = null;
-        if(categoryOptional.isPresent()){
-            categoryToBeUpdated = categoryOptional.get();
-            categoryToBeUpdated.setName(categoryDTO.getName());
-            Optional<Category> parentOptional = categoryRespository.findById(categoryDTO.getParentId());
-            if(parentOptional.isPresent()){
-                Category parent = parentOptional.get();
-                categoryToBeUpdated.setParent(parent);
-            }
-            categoryToBeUpdated.setStatus(categoryDTO.getStatus());
+        Category categoryToBeUpdated = findById(category_id);
+        if(categoryToBeUpdated == null){
+            throw new NotFoundException("Category Not Found with id: {" + category_id + "}");
         }
-        else {
-            throw new NotFoundException("Category Not Found");
+        categoryToBeUpdated.setName(categoryDTO.getName());
+        Category parent = findById(categoryDTO.getParentId());
+        if(parent != null){
+            categoryToBeUpdated.setParent(parent);
         }
         return categoryRespository.save(categoryToBeUpdated);
+    }
+
+    @Override
+    public String deleteCategory(Long category_id) {
+        String categoryname = "";
+        Category categoryToBeDelete = findById(category_id);
+        if(categoryToBeDelete == null){
+            throw new NotFoundException("Category Not Found with id: {" + category_id + "}");
+        }
+        categoryname = categoryToBeDelete.getName();
+        categoryRespository.delete(categoryToBeDelete);
+        return "Category {" + categoryname+"} was successfully deleted";
+    }
+
+    @Override
+    public Category findById(Long category_id) {
+        Optional<Category> categoryOptional = categoryRespository.findById(category_id);
+        return categoryOptional.orElse(null);
     }
 }

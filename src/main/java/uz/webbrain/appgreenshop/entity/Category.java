@@ -28,7 +28,6 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "parent_id", nullable = true)
     private Category parent;
-    private String status;
 
     @Override
     public boolean equals(Object o) {
