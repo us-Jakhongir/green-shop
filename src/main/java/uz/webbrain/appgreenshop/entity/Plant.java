@@ -8,6 +8,7 @@ package uz.webbrain.appgreenshop.entity;
 
 import lombok.*;
 import uz.webbrain.appgreenshop.entity.template.AbcEntity;
+
 import javax.persistence.*;
 
 @Getter
@@ -21,7 +22,7 @@ public class Plant extends AbcEntity {
     private String name;
     private String description;
     @ManyToOne
-    @JoinColumn(name = "category_id_id")
+    @JoinColumn(name = "category_id")
     private Category category;
     @ManyToOne
     @JoinColumn(name = "related_id")
