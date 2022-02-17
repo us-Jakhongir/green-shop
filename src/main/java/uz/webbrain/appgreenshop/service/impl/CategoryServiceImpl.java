@@ -8,7 +8,7 @@ package uz.webbrain.appgreenshop.service.impl;
 
 
 import org.springframework.stereotype.Service;
-import uz.webbrain.appgreenshop.dto.dto.request.CategoryDTO;
+import uz.webbrain.appgreenshop.dto.request.CategoryDTO;
 import uz.webbrain.appgreenshop.entity.Category;
 import uz.webbrain.appgreenshop.exception.NotFoundException;
 import uz.webbrain.appgreenshop.repository.CategoryRespository;
