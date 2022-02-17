@@ -27,7 +27,7 @@ public class Plant {
     private String description;
     @ManyToOne
     @JoinColumn(name = "category_id_id")
-    private Category category_id;
+    private Category categoryId;
     @ManyToOne
     @JoinColumn(name = "related_id")
     private Plant related;
