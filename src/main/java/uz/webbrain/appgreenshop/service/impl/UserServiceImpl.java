@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         Set<Role> roleSet = new HashSet<>();
         Set<Long> roleIds = dto.getRoleIds();
         for (Long roleId : roleIds) {
-            Role role  = roleRepository.findById(roleId)
+            Role role = roleRepository.findById(roleId)
                     .orElseThrow(() -> new NotFoundException("Not Found Role with ID: " + roleId));
             roleSet.add(role);
         }
@@ -63,42 +63,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(Long userId, UserCreateDto dto) {
         Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isEmpty())
-            throw new NotFoundException("Not Found User with ID: " + userId);
+        if (userOptional.isPresent()) {
 
-        User user = userOptional.get();
+            User user = userOptional.get();
 
-        if (!user.getFirstname().equals(dto.getFirstname())) {
-            user.setFirstname(dto.getFirstname());
+            if (!user.getFirstname().equals(dto.getFirstname())) {
+                user.setFirstname(dto.getFirstname());
+            }
+
+            if (!user.getLastname().equals(dto.getLastname())) {
+                user.setLastname(dto.getLastname());
+            }
+
+            if (!user.getEmail().equals(dto.getEmail())) {
+                user.setEmail(dto.getEmail());
+            }
+
+            if (!user.getPassword().equals(dto.getPassword())) {
+                user.setPassword(dto.getPassword());
+            }
+
+            Set<Role> newRoleSet = new HashSet<>();
+            Set<Long> roleIds1 = dto.getRoleIds();
+            for (Long aLong : roleIds1) {
+                Optional<Role> byId = roleRepository.findById(aLong);
+                if (byId.isPresent()) {
+                    Role role = byId.get();
+                    newRoleSet.add(role);
+                } else {
+                    throw new NotFoundException("Not Found Role with ID: " + byId);
+                }
+            }
+
+            Set<Role> roles = user.getRoles();
+            roles.addAll(newRoleSet);
+            user.setRoles(roles);
+
+            return userRepository.save(user);
         }
-
-        if (!user.getLastname().equals(dto.getLastname())) {
-            user.setLastname(dto.getLastname());
-        }
-
-        if (!user.getEmail().equals(dto.getEmail())) {
-            user.setEmail(dto.getEmail());
-        }
-
-        if (!user.getPassword().equals(dto.getPassword())) {
-            user.setPassword(dto.getPassword());
-        }
-
-        Set<Role> newRoleSet = new HashSet<>();
-        Set<Long> roleIds1 = dto.getRoleIds();
-        for (Long aLong : roleIds1) {
-            Optional<Role> byId = roleRepository.findById(aLong);
-            if (byId.isEmpty())
-                throw new NotFoundException("Not Found Role with ID: " + byId);
-            Role role = byId.get();
-            newRoleSet.add(role);
-        }
-
-        Set<Role> roles = user.getRoles();
-        roles.addAll(newRoleSet);
-        user.setRoles(roles);
-
-        return userRepository.save(user);
+        throw new NotFoundException("Not Found User with ID: " + userId);
     }
 
     @Override
