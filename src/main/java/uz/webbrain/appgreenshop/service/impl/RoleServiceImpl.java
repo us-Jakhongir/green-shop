@@ -36,23 +36,24 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role findById(Long roleId) {
         Optional<Role> roleOptional = roleRepository.findById(roleId);
-        if (roleOptional.isEmpty())
-            throw new NotFoundException("Not Found Role");
-        return roleOptional.get();
+        if (roleOptional.isPresent()) {
+            return roleOptional.get();
+        }
+        throw new NotFoundException("Not Found Role");
     }
 
 
     @Override
     public Role updateRole(Long roleId, RoleCreateDto dto) {
         Optional<Role> roleOptional = roleRepository.findById(roleId);
-        if (roleOptional.isEmpty())
-            throw new NotFoundException("Not Found Role");
-
-        Role role = roleOptional.get();
-        if (!role.getName().equals(dto.getName())) {
-            role.setName(dto.getName());
+        if (roleOptional.isPresent()) {
+            Role role = roleOptional.get();
+            if (!role.getName().equals(dto.getName())) {
+                role.setName(dto.getName());
+            }
+            return roleRepository.save(role);
         }
-        return roleRepository.save(role);
+        throw new NotFoundException("Not Found Role");
     }
 
 
