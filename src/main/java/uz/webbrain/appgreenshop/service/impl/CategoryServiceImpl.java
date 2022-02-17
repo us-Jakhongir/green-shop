@@ -10,6 +10,7 @@ package uz.webbrain.appgreenshop.service.impl;
 import org.springframework.stereotype.Service;
 import uz.webbrain.appgreenshop.dto.dto.request.CategoryDTO;
 import uz.webbrain.appgreenshop.entity.Category;
+import uz.webbrain.appgreenshop.exception.NotFoundException;
 import uz.webbrain.appgreenshop.repository.CategoryRespository;
 import uz.webbrain.appgreenshop.service.CategoryService;
 
@@ -49,6 +50,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category editCategory(Long category_id, CategoryDTO categoryDTO) {
-        return null;
+        Optional<Category> categoryOptional = categoryRespository.findById(category_id);
+        Category categoryToBeUpdated = null;
+        if(categoryOptional.isPresent()){
+            categoryToBeUpdated = categoryOptional.get();
+            categoryToBeUpdated.setName(categoryDTO.getName());
+            Optional<Category> parentOptional = categoryRespository.findById(categoryDTO.getParentId());
+            if(parentOptional.isPresent()){
+                Category parent = parentOptional.get();
+                categoryToBeUpdated.setParent(parent);
+            }
+            categoryToBeUpdated.setStatus(categoryDTO.getStatus());
+        }
+        else {
+            throw new NotFoundException("Category Not Found");
+        }
+        return categoryRespository.save(categoryToBeUpdated);
     }
 }
