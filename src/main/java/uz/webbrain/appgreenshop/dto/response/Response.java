@@ -1,4 +1,4 @@
-package uz.webbrain.appgreenshop.drr.response;
+package uz.webbrain.appgreenshop.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

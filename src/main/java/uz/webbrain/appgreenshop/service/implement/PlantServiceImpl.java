@@ -2,8 +2,8 @@ package uz.webbrain.appgreenshop.service.implement;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.webbrain.appgreenshop.drr.dto.PlantCreateDto;
-import uz.webbrain.appgreenshop.drr.response.Response;
+import uz.webbrain.appgreenshop.dto.request.PlantCreateDto;
+import uz.webbrain.appgreenshop.dto.response.Response;
 import uz.webbrain.appgreenshop.entity.Plant;
 import uz.webbrain.appgreenshop.exception.PlantNotFoundException;
 import uz.webbrain.appgreenshop.repository.PlantRepository;
