@@ -7,11 +7,10 @@ package uz.webbrain.appgreenshop.entity;
  */
 
 import lombok.*;
-import org.hibernate.Hibernate;
+import uz.webbrain.appgreenshop.entity.template.AbcEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Table(name = "incoming")
@@ -20,23 +19,7 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Incoming {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Incoming extends AbcEntity {
     private LocalDate date;
     private Double price; // summa
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Incoming incoming = (Incoming) o;
-        return id != null && Objects.equals(id, incoming.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

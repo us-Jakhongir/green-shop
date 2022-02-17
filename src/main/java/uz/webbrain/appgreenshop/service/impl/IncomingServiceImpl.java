@@ -7,16 +7,16 @@ package uz.webbrain.appgreenshop.service.impl;
  */
 
 
+import org.springframework.stereotype.Service;
 import uz.webbrain.appgreenshop.dto.request.IncomingDto;
 import uz.webbrain.appgreenshop.entity.Incoming;
 import uz.webbrain.appgreenshop.exception.NotFoundException;
 import uz.webbrain.appgreenshop.repository.IncomingRepository;
 import uz.webbrain.appgreenshop.service.IncomingService;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class IncomingServiceImpl implements IncomingService {
 
     private final IncomingRepository incomingRepository;
