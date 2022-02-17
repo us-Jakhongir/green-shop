@@ -1,4 +1,4 @@
-package uz.webbrain.appgreenshop.dto.dto.request;
+package uz.webbrain.appgreenshop.dto.request;
 
 /*
  * project:  app-green-shop

@@ -1,12 +1,14 @@
-package uz.webbrain.appgreenshop.service.implement;
+package uz.webbrain.appgreenshop.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.webbrain.appgreenshop.dto.request.PlantCreateDto;
 import uz.webbrain.appgreenshop.dto.response.Response;
+import uz.webbrain.appgreenshop.entity.Category;
 import uz.webbrain.appgreenshop.entity.Plant;
 import uz.webbrain.appgreenshop.exception.PlantNotFoundException;
 import uz.webbrain.appgreenshop.repository.PlantRepository;
+import uz.webbrain.appgreenshop.service.CategoryService;
 import uz.webbrain.appgreenshop.service.PlantService;
 
 import java.util.List;
@@ -16,57 +18,57 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PlantServiceImpl implements PlantService {
     private final PlantRepository plantRepository;
+    private final CategoryService categoryService;
 
     @Override
     public Plant save(PlantCreateDto dto) {
-        Optional<Plant> optionalPlant = plantRepository.findById(dto.getPlantId());
-        if (optionalPlant.isPresent())
-            throw new PlantNotFoundException("Plant id{" + dto.getPlantId() + "} not found");
-        Plant plant1 = optionalPlant.get();
-        Plant plant = new Plant(
-                dto.getName(),
-                dto.getDescription(),
-                dto.getCategoryId(),
-                plant1);
-        Plant savedPlant = plantRepository.save(plant);
-        return savedPlant;
+
+        Plant parentPlant = findById(dto.getPlantId());
+        Plant plant = new Plant();
+        plant.setName(dto.getName());
+        plant.setDescription(dto.getDescription());
+        Category category = categoryService.findById(dto.getCategoryId());
+        plant.setCategory(category);
+        plant.setRelated(parentPlant);
+        return plantRepository.save(plant);
     }
 
     @Override
     public List<Plant> findAll() {
-        List<Plant> plantList = plantRepository.findAll();
-        return plantList;
+        return plantRepository.findAll();
     }
 
     @Override
     public Plant findById(Long id) {
         Optional<Plant> optionalPlant = plantRepository.findById(id);
+        Plant plant = null;
         if (optionalPlant.isPresent())
-            throw new PlantNotFoundException("Plant id{" + id + "} not found");
-        Plant plant = optionalPlant.get();
+            plant = optionalPlant.get();
         return plant;
     }
 
     @Override
     public Plant update(Long id, PlantCreateDto dto) {
-        Optional<Plant> optionalPlant = plantRepository.findById(id);
-        if (optionalPlant.isPresent())
+        Plant plant = findById(id);
+        if (plant == null)
             throw new PlantNotFoundException("Plant id{" + id + "} not found");
-        Plant plant1 = optionalPlant.get();
-        Plant plant = new Plant(
-                dto.getName(),
-                dto.getDescription(),
-                dto.getCategoryId(),
-                plant1);
+        Plant parentPlant = findById(dto.getPlantId());
+        plant.setName(dto.getName());
+        plant.setDescription(dto.getDescription());
+
+        Category category = categoryService.findById(dto.getCategoryId());
+        plant.setCategory(category);
+        plant.setRelated(parentPlant);
+        plantRepository.save(plant);
         return plant;
     }
 
     @Override
     public Response delete(Long id) {
-        Optional<Plant> optionalPlant = plantRepository.findById(id);
-        if (optionalPlant.isPresent())
+        Plant plant = findById(id);
+        if (plant == null)
             throw new PlantNotFoundException("Plant id{" + id + "} not found");
-        Plant plant = optionalPlant.get();
+        plantRepository.delete(plant);
         return new Response("Successfully deleted", plant);
     }
 }

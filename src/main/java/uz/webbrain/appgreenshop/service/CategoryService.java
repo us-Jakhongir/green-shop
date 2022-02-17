@@ -6,7 +6,7 @@ package uz.webbrain.appgreenshop.service;
  * created:  17/02/2022 1:25 PM
  */
 
-import uz.webbrain.appgreenshop.dto.dto.request.CategoryDTO;
+import uz.webbrain.appgreenshop.dto.request.CategoryDTO;
 import uz.webbrain.appgreenshop.entity.Category;
 
 import java.util.List;

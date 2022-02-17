@@ -7,10 +7,8 @@ package uz.webbrain.appgreenshop.entity;
  */
 
 import lombok.*;
-import org.hibernate.Hibernate;
-
+import uz.webbrain.appgreenshop.entity.template.AbcEntity;
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "plant_incoming")
@@ -19,10 +17,7 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlantIncoming {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PlantIncoming extends AbcEntity {
     private String size;
     private Double price;
     @ManyToOne
@@ -33,18 +28,4 @@ public class PlantIncoming {
     private Incoming incoming;
     private Long quantity;
     private Boolean active;
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PlantIncoming that = (PlantIncoming) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

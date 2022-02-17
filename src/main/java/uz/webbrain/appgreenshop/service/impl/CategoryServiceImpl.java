@@ -7,8 +7,9 @@ package uz.webbrain.appgreenshop.service.impl;
  */
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.webbrain.appgreenshop.dto.dto.request.CategoryDTO;
+import uz.webbrain.appgreenshop.dto.request.CategoryDTO;
 import uz.webbrain.appgreenshop.entity.Category;
 import uz.webbrain.appgreenshop.exception.NotFoundException;
 import uz.webbrain.appgreenshop.repository.CategoryRespository;
@@ -18,12 +19,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRespository categoryRespository;
-    public CategoryServiceImpl(CategoryRespository categoryRespository){
-        this.categoryRespository = categoryRespository;
-    }
 
     @Override
     public Category addCategory(CategoryDTO categoryDTO) {

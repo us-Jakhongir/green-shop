@@ -7,7 +7,7 @@ package uz.webbrain.appgreenshop.controller;
  */
 
 import org.springframework.web.bind.annotation.*;
-import uz.webbrain.appgreenshop.dto.dto.request.CategoryDTO;
+import uz.webbrain.appgreenshop.dto.request.CategoryDTO;
 import uz.webbrain.appgreenshop.entity.Category;
 import uz.webbrain.appgreenshop.service.CategoryService;
 
