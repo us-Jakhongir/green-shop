@@ -1,6 +1,9 @@
 package uz.webbrain.appgreenshop.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.webbrain.appgreenshop.dto.request.PlantCreateDto;
 import uz.webbrain.appgreenshop.dto.response.Response;
@@ -16,32 +19,41 @@ public class PlantController {
     private final PlantService plantService;
 
     @PostMapping("/save")
-    public Plant save(@RequestBody PlantCreateDto dto){
+    public Plant save(@RequestBody PlantCreateDto dto) {
         Plant plant = plantService.save(dto);
         return plant;
     }
 
+    // Pageable
+    @GetMapping("/page/list")
+    public HttpEntity<?> findAllPageable(@RequestParam("page") Integer page,
+                                         @RequestParam("page") Integer size,
+                                         @RequestParam("page") Sort sort) {
+        Response response = plantService.findAllPageable(page, size, sort);
+        return ResponseEntity.status(response.isSuccess() ? 200 : 500).body(response);
+    }
+
     @GetMapping("/list")
-    public List<Plant> findAll(){
+    public List<Plant> findAll() {
         List<Plant> plantList = plantService.findAll();
         return plantList;
     }
 
     @GetMapping("/{id}")
-    public Plant findById(@PathVariable("id") Long id){
+    public Plant findById(@PathVariable("id") Long id) {
         Plant plant = plantService.findById(id);
         return plant;
     }
 
     @PutMapping("/{id}/update")
     public Plant updateById(@PathVariable("id") Long id,
-                            @RequestBody PlantCreateDto dto){
+                            @RequestBody PlantCreateDto dto) {
         Plant plant = plantService.update(id, dto);
         return plant;
     }
 
     @DeleteMapping("/{id}/delete")
-    public Response deleteById(@PathVariable("id") Long id){
+    public Response deleteById(@PathVariable("id") Long id) {
         Response response = plantService.delete(id);
         return new Response("Successfully deleted", response);
     }

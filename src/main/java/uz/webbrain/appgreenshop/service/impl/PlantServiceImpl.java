@@ -1,6 +1,10 @@
 package uz.webbrain.appgreenshop.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import uz.webbrain.appgreenshop.dto.request.PlantCreateDto;
 import uz.webbrain.appgreenshop.dto.response.Response;
@@ -35,6 +39,18 @@ public class PlantServiceImpl implements PlantService {
     @Override
     public List<Plant> findAll() {
         return plantRepository.findAll();
+    }
+
+    @Override
+    public Response findAllPageable(Integer page, Integer size, Sort sort) {
+        Pageable pageable = PageRequest.of(0, 2, Sort.by("createdAt"));
+        Page<Plant> plantRepositoryAll = plantRepository.findAll(pageable);
+        List<Plant> plantList = plantRepositoryAll.getContent();
+        Response response = new Response(true, "Plant List", plantList);
+        response.getMap().put("size", plantRepositoryAll.getSize());
+        response.getMap().put("total_elements", plantRepositoryAll.getTotalElements());
+        response.getMap().put("total_pages", plantRepositoryAll.getTotalPages());
+        return response;
     }
 
     @Override
