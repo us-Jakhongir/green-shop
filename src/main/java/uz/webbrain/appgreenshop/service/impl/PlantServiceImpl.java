@@ -47,8 +47,8 @@ public class PlantServiceImpl implements PlantService {
     }
 
     @Override
-    public Response findAllPageable(Integer page, Integer size, Sort sort) {
-        Pageable pageable = PageRequest.of(0, 2, Sort.by("createdAt"));
+    public Response findAllPageable(Pageable pageable) {
+//        Pageable pageable = PageRequest.of(0, 2, Sort.by("createdAt"));
         Page<Plant> plantRepositoryAll = plantRepository.findAll(pageable);
         List<Plant> plantList = plantRepositoryAll.getContent();
         Response response = new Response(true, "Plant List", plantList);
