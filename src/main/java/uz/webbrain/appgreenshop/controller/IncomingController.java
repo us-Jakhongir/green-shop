@@ -22,12 +22,12 @@ public class IncomingController {
         this.incomingService = incomingService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Incoming> getAll(){
         return incomingService.getAll();
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public Incoming addIncoming(@RequestBody IncomingDto incomingDto){
         return incomingService.addIncoming(incomingDto);
     }

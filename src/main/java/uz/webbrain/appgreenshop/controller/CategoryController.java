@@ -26,12 +26,12 @@ public class CategoryController {
      * CRUD - get categories
      * @return
      */
-    @GetMapping("/")
+    @GetMapping
     public List<Category> getCategories(){
         return categoryService.findAll();
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public Category addCategory(@RequestBody CategoryDTO categoryDTO){
         return categoryService.addCategory(categoryDTO);
     }

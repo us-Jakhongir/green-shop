@@ -19,4 +19,13 @@ public enum PlantSize {
     public String getDescription() {
         return description;
     }
+
+    public static PlantSize getSize(String size){
+        for(PlantSize plantSize : values()){
+            if(plantSize.getDescription().equals(size)){
+                return plantSize;
+            }
+        }
+        throw new IllegalArgumentException(size + " is not a valid plant size");
+    }
 }

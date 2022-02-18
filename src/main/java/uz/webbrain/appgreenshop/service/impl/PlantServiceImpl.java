@@ -35,7 +35,7 @@ public class PlantServiceImpl implements PlantService {
         Category category = categoryService.findById(dto.getCategoryId());
         plant.setCategory(category);
         plant.setRelated(relatedPlant);
-        plant.setSize(PlantSize.valueOf(dto.getSize()));
+        plant.setSize(PlantSize.getSize(dto.getSize()));
         plant.setParent(parentPlant);
         plant.setCreatedAt(dto.getCreatedAt());
         return plantRepository.save(plant);
@@ -60,6 +60,8 @@ public class PlantServiceImpl implements PlantService {
 
     @Override
     public Plant findById(Long id) {
+        if(id == null)
+            return null;
         Plant plant = null;
         Optional<Plant> optionalPlant = plantRepository.findById(id);
         if (optionalPlant.isPresent())
