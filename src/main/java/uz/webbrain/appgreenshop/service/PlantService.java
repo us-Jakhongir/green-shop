@@ -1,5 +1,6 @@
 package uz.webbrain.appgreenshop.service;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import uz.webbrain.appgreenshop.dto.request.PlantCreateDto;
 import uz.webbrain.appgreenshop.dto.response.Response;
@@ -21,7 +22,7 @@ public interface PlantService {
      */
     List<Plant> findAll();
 
-    Response findAllPageable(Integer page, Integer size, Sort sort);
+    Response findAllPageable(Pageable pageable);
 
     /**
      * Find the plant on {id}
