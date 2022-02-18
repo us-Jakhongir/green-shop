@@ -11,6 +11,7 @@ import uz.webbrain.appgreenshop.entity.template.AbcEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "incoming")
@@ -20,7 +21,24 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Incoming extends AbcEntity {
-    private LocalDate date;
+
+    @Column(name = "price")
     private Double price; // summa
+
+    @Column(name = "sale_price")
+    private Double salePrice;
+
+    @ManyToOne
+    @JoinColumn(name = "plant_id")
+    private Plant plant;
+
+    @Column(name = "quantity")
+    private Long quantity;
+
+    @Column(name = "active")
+    private Boolean active;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
 }

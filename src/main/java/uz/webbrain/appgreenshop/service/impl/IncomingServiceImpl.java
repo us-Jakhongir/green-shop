@@ -7,29 +7,36 @@ package uz.webbrain.appgreenshop.service.impl;
  */
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.webbrain.appgreenshop.dto.request.IncomingDto;
 import uz.webbrain.appgreenshop.entity.Incoming;
+import uz.webbrain.appgreenshop.entity.Plant;
 import uz.webbrain.appgreenshop.exception.NotFoundException;
 import uz.webbrain.appgreenshop.repository.IncomingRepository;
 import uz.webbrain.appgreenshop.service.IncomingService;
+import uz.webbrain.appgreenshop.service.PlantService;
 
 import java.util.List;
 import java.util.Optional;
 @Service
+@RequiredArgsConstructor
 public class IncomingServiceImpl implements IncomingService {
 
     private final IncomingRepository incomingRepository;
-    public IncomingServiceImpl(IncomingRepository incomingRepository){
-        this.incomingRepository = incomingRepository;
-    }
+    private final PlantService plantService;
 
     @Override
     public Incoming addIncoming(IncomingDto incomingDto) {
-        Incoming newIncoming = new Incoming();
-        newIncoming.setDate(incomingDto.getDate());
-        newIncoming.setPrice(incomingDto.getPrice());
-        return incomingRepository.save(newIncoming);
+        Incoming incoming = new Incoming();
+        incoming.setPrice(incomingDto.getPrice());
+        incoming.setSalePrice(incomingDto.getSalePrice());
+        Plant plant = plantService.findById(incomingDto.getPlantId());
+        incoming.setPlant(plant);
+        incoming.setQuantity(incomingDto.getQuantity());
+        incoming.setActive(incomingDto.getActive());
+        incoming.setCreatedAt(incomingDto.getCreatedAt());
+        return incomingRepository.save(incoming);
     }
 
     @Override
@@ -43,8 +50,13 @@ public class IncomingServiceImpl implements IncomingService {
         if(incomingToBeEdited == null){
             throw new NotFoundException("No data found with id {" + incomingId + "}.");
         }
-        incomingToBeEdited.setDate(incomingDto.getDate());
         incomingToBeEdited.setPrice(incomingDto.getPrice());
+        incomingToBeEdited.setSalePrice(incomingDto.getSalePrice());
+        Plant plant = plantService.findById(incomingDto.getPlantId());
+        incomingToBeEdited.setPlant(plant);
+        incomingToBeEdited.setQuantity(incomingDto.getQuantity());
+        incomingToBeEdited.setActive(incomingDto.getActive());
+        incomingToBeEdited.setCreatedAt(incomingDto.getCreatedAt());
         return incomingRepository.save(incomingToBeEdited);
     }
 

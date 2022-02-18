@@ -12,13 +12,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class IncomingDto {
-    private LocalDate date;
     private Double price; // summa
-
+    private Double salePrice; // sale
+    private Long plantId;
+    private Long quantity;
+    private Boolean active;
+    private LocalDateTime createdAt;
 }

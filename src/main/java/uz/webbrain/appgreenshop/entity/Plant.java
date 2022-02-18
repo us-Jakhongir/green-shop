@@ -25,7 +25,7 @@ public class Plant extends AbcEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "name")
+    @Column(name = "description", nullable = false, unique = true)
     private String description;
 
     @ManyToOne
@@ -34,14 +34,16 @@ public class Plant extends AbcEntity {
 
     // BU RELATED BO'LGAN PLANT ID SI
     @ManyToOne
-    @JoinColumn(name = "related_id")
+    @JoinColumn(name = "related_id", nullable = true)
     private Plant related;
 
     @Enumerated(EnumType.STRING)
     private PlantSize size;
 
     @ManyToOne
+    @JoinColumn(name = "parent_id", nullable = true)
     private Plant parent;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 }
