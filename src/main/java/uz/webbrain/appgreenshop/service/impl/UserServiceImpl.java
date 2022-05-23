@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    @Override
+   /* @Override
     public User saveUser(UserCreateDto dto) {
 //        if (userRepository.existsByEmail(dto.getEmail()))                    // email bo'yicha ishlamadi
 //            throw new RuntimeException("Such Email already exists");
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
                 roleSet
         );
         return userRepository.save(user);
-    }
+    }*/
 
 
     @Override

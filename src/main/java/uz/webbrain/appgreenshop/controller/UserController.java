@@ -15,10 +15,10 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping
+   /* @PostMapping
     public User save(@RequestBody UserCreateDto dto) {
         return userService.saveUser(dto);
-    }
+    }*/
 
     @GetMapping
     public List<User> findAll() {

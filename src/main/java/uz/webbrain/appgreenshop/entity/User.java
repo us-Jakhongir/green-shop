@@ -1,23 +1,26 @@
 package uz.webbrain.appgreenshop.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import uz.webbrain.appgreenshop.entity.template.AbcEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-public class User extends AbcEntity {
+public class User extends AbcEntity implements UserDetails {
 
     @Column(nullable = false)
     private String firstname;
@@ -32,11 +35,54 @@ public class User extends AbcEntity {
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<Role> roles = new HashSet<>();
 
-    public User(Set<Role> roles) {
-        this.roles = roles;
+
+
+
+    ////////////////////////////    USER DETAILS METHODLARI   ///////////////////////////////
+
+    private boolean accountNonExpired = true;          // Bu User account ning amal qilish muddati o'tmaganligi
+    private boolean accountNonLocked = true;           // Bu User account i qulflanmaganligi
+    private boolean credentialsNonExpired = true;      // Bu User account ining ishonchliligi
+    private boolean enabled = true;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles;
     }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+
+
+
+
 
     @Override
     public boolean equals(Object o) {
